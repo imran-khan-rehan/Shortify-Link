@@ -1,0 +1,102 @@
+<!-- signin.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Signin</title>
+</head>
+<style>
+  /* styles.css */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: rgba(255, 185, 48, 1); /* Yellow background color */
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+form {
+  min-height: 50%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  width: 70%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  align-items: center;
+  background-color: rgba(255, 185, 48, 1); /* Green background color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+.btn{
+  display: flex;
+  flex-direction: row;
+  margin-top: 100px;
+}
+.btn a{
+  margin-top: 15px;
+  height: fit-content;
+  margin-left: 5px;
+  font-size: 15px;
+}
+.error{
+  margin-top: 5px;
+  color: red;
+}
+h1{
+  color: white;
+}
+</style>
+<body>
+
+  <h1>Signin</h1>
+  <form action="/signin" method="POST">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <button type="submit">Signin</button>
+   <div class="error"> <%= message %></div>
+   <div class="btn"> <p>Not account ?</p>
+    <a href="/">signup here</a>
+  </div>
+
+  </form>
+
+</body>
+</html>

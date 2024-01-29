@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Shortify</title>
+</head>
+
+<style>
+  
+  .card {
+    margin-top: 100px;
+    position: relative;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add your desired box shadow here */
+    border-radius: 8px; /* Add border-radius for rounded corners, adjust as needed */
+    padding: 16px; /* Add padding as needed */
+    transition: box-shadow 0.3s ease; /* Add a smooth transition for the box shadow */
+ justify-content: center;
+    display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+    border: 1px solid #ddd; /* Add a border */
+  }
+  .card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Adjust the box shadow on hover */
+  }
+  .link {
+    display: flex;
+    flex-direction: column;
+   background-color:rgb(238, 182, 77);
+    align-items: center;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add your desired box shadow here */
+
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  
+
+  .link p {
+    margin-bottom: 5px;
+  }
+
+  .link a {
+    color: #007bff;
+  }
+  .shorturl {
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+  .modal{
+    position:absolute;
+   width: 100%;
+   height: 100%;
+   display: none;
+  }
+  .modal-content{
+    z-index: 10;
+    opacity: 1;
+    position: fixed;
+    top: 30%;
+    left: 30%;
+    background-color: #007bff;
+    color: white;
+    padding: 50px;
+    text-align: center;
+    border-radius: 5px;
+  }
+  #confirmDelete ,#cancelDelete{
+    padding: 8px;
+  }
+  .link-actions{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  header {
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 185, 48, 1);
+    color: #fff;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    margin-left: 10px;
+  }
+</style>
+
+<body>
+  <header>
+    <nav>
+<h1>Shortify</h1>
+<h1><a href="/home">Home</a></h1>
+    </nav>
+  </header>  <div class="card">
+    <% links.forEach(link=> { %>
+      <div class="link">
+        <!-- <p><strong>Name:</strong>
+          <%= link.name %>
+        </p> -->
+        <div class="link-header">
+          <p><strong>Name:</strong> <%= link.name %></p>
+         
+        </div>
+        <strong>Short URL:</strong> 
+        <p class="shorturl"><a class="shorturl"  href="<%= link.shortUrl %>">
+            <%= link.shortUrl %>
+          </a>
+        </p>
+        <img src="/qrcode/<%= link.name %>.png" alt="QR Code" width="150px" height="150px">
+
+        <div class="link-actions">
+          <a href="/edit?id=<%= link._id %>" title="Edit">
+            <button class="edit">edit</button>
+          </a>
+          <button class="delete-btn" data-link-id="<%= link._id %>" title="Delete">
+            <i class="fas fa-trash">delete</i>
+
+          </button>
+        </div>
+      </div>
+      <% }); %>
+      <div id="deleteModal" class="modal">
+        <div class="modal-content">
+          <p>Are you sure you want to delete this link?</p>
+          <button id="confirmDelete">Confirm</button>
+          <button id="cancelDelete">Cancel</button>
+        </div>
+      </div>
+  </div>
+ 
+</body>
+<script>
+ 
+  document.addEventListener('DOMContentLoaded', function () {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    const deleteModal = document.getElementById('deleteModal');
+    const confirmDeleteBtn = document.getElementById('confirmDelete');
+    const cancelDeleteBtn = document.getElementById('cancelDelete');
+
+    deleteButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        deleteModal.style.display = 'block';
+
+        // Set link ID in the modal data attribute
+        const linkId = this.getAttribute('data-link-id');
+        console.log(linkId);
+        confirmDeleteBtn.setAttribute('data-link-id', linkId);
+      });
+    });
+
+    confirmDeleteBtn.addEventListener('click', function () {
+      // Redirect to the delete route with the link ID
+      const linkId = confirmDeleteBtn.getAttribute('data-link-id');
+      console.log(linkId);
+      deleteModal.style.display='none';
+      window.location.href = `/delete?id=${linkId}`;
+    });
+
+    cancelDeleteBtn.addEventListener('click', function () {
+      deleteModal.style.display = 'none';
+    });
+  });
+</script>
+
+</html>

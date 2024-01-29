@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Edit</title>
+</head>
+<style>
+  /* styles.css */
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: rgba(255, 185, 48, 1);
+    /* Yellow background color */
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    margin-top: 0;
+  
+    background-color: rgb(9, 9, 9);
+    color: #fff;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    margin-left: 10px;
+  }
+
+  form {
+    min-height: 50%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  button {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    align-items: center;
+    background-color: rgba(255, 185, 48, 1);
+    /* Green background color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  button:hover {
+    background-color: #45a049;
+    /* Darker green on hover */
+  }
+
+  .btn {
+    display: flex;
+    flex-direction: row;
+    margin-top: 100px;
+  }
+
+  button a {
+    height: fit-content;
+    text-decoration: none;
+    font-size: 15px;
+    color: white;
+  }
+
+  button {
+    margin-bottom: 10px;
+  }
+
+  .error {
+    margin-top: 5px;
+    color: red;
+  }
+  h1{
+    color: white;
+  }
+</style>
+
+<body>
+  <header>
+    <nav>
+      <h1>Shortify</h1>
+      <h1><a href="/dashboard">All URLS</a></h1>
+    </nav>
+  </header>
+  <h1>Edit</h1>
+  <form action="/edit?id=<%= link._id %>" method="POST">
+    <label for="url">Long URL:</label>
+    <input type="url" id="url" name="url" required value="<%=link.url %>">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="<%= link.name %>" required>
+    <button type="submit">Save</button>
+    <button><a href="/dashboard">Cancel</a> </button>
+    <div class="error">
+      <%= message %>
+    </div>
+    </div>
+  </form>
+
+</body>
+
+</html>

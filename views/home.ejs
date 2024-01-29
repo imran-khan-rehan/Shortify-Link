@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shortify</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      
+      header {
+        position:fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgba(255, 185, 48, 1);
+        color: #fff;
+      }
+      
+      nav {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 15px;
+        margin-left: 10px;
+      }
+      
+      .signup {
+        background-color: #fff;
+        color: rgba(255, 185, 48, 1);
+        padding: 10px 15px;
+        border-radius: 5px;
+      }
+      
+      .quote {
+        background-color: rgba(255, 185, 48, 1);
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 5px;
+      }
+      
+      main {
+        padding: 20px;
+        background-color: #f2f2f2;
+
+      }
+      
+      .hero {
+        text-align: center;
+        padding: 50px 0;
+      }
+      
+      .hero h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+      
+      .hero p {
+        font-size: 18px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+      }
+      
+      .hero .learn-more {
+        background-color: rgba(255, 185, 48, 1);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+      
+     
+      .buttons {
+        background-color: #f2f2f2;
+
+        display: flex;
+        justify-content:center;
+      }
+      
+      .buttons button {
+        padding: 20px 30px;
+        font-size: 20px;
+        border: none;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+        cursor: pointer;
+        transform: translateY(4px);
+
+      }
+      
+      .buttons button:hover {
+        background-color:#E8E9EB;
+      }
+      
+      .hidden {
+        display: none;   
+      }
+      
+      .forms-section {
+        width: 70%;
+        margin: auto;
+        padding: 20px;
+        background-color: white;
+        border: 4px solid #E8E9EB !important;
+
+        border-radius: 5px;
+      }
+      
+      form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      
+      form input{
+        width: 90%;
+        border-radius: 10px;
+        padding: 15px;
+        border: 1px solid #ccc;
+      }
+      
+      form button {
+        padding: 10px 40px;
+        border-radius: 5px;
+        font-size: 20px;
+        background-color: rgba(255, 185, 48, 1);
+        color: #fff;
+        border: none;
+        margin-top: 10px;
+        cursor: pointer;
+      }
+      
+      form button:hover {
+        background-color: #0069d9;
+      }
+      .active {
+        background-color: white;
+        border: 4px solid #E8E9EB !important;
+        border-bottom: 4px solid white !important;
+       
+      }
+  
+      .inactive {
+        background-color: #f2f2f2;
+      }
+      .active:hover{
+        background-color: white !important;
+      }
+      .footer{
+        text-align: center;
+      }
+</style>
+<body>
+  <header>
+    <nav>
+<h1>Shortify</h1>
+<h1><a href="/dashboard">All URLS</a></h1>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Make every URL short</h1>
+      <p>Create short links and QR Codes. Share them anywhere. All inside the Shortify Connections Platform.</p>
+      <a href="#" class="learn-more">Learn more</a>
+    </section>
+   
+    <div class="buttons">
+        <button id="short-link-btn" class="active">Short Link</button>
+        <button id="QR-code-btn" class="inactive">QR Code</button>
+    </div>  
+    <section class="forms-section">
+   
+        <form id="Short-URL" action="/createShort" method="POST">
+          <h2>Create Short URL </h2>
+          <label for="Long-URL">Original URL</label>
+          <input type="url" id="Long-URL" name="url" required>
+      
+          <label for="URL-name">Name</label>
+          <input type="text" id="URL-name" name="name" required>
+      
+          <button type="submit">Create URL</button>
+        </form>
+      
+        <form id="quote-form" class="hidden" action="/createQR" method="POST">
+          <h2>Get a QR Code of URL</h2>
+          <label for="Long-URL">Original URL</label>
+          <input type="url" id="Long-URL" name="url" required>
+      
+          <label for="URL-name">Name</label>
+          <input type="text" id="URL-name" name="name" required>
+      
+          <button type="submit">Create QR Code</button>
+        </form>
+        <h2> <%= message %></h2>
+
+        <% links.forEach(link => { %>
+            <div class="link">
+                <% if (link.shortUrl) { %>
+                    <p><strong>Short URL:</strong> <a href="<%= link.shortUrl %>"><%= link.shortUrl %></a></p>
+                  <% } %>
+            <img src="/qrcode/<%= link.name %>.png" alt="">
+            </div>
+          <% }); %>
+       
+      </section>
+                                                                                                                                                                                                                                                                                                                                                                                          
+  </main>
+  
+
+  <footer class="footer">
+    <p>&copy; 2023 Shortify. All rights reserved.</p>
+  </footer>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const signupForm = document.getElementById('Short-URL');
+      const quoteForm = document.getElementById('quote-form');
+  
+      const signupBtn = document.getElementById('short-link-btn');
+      const quoteBtn = document.getElementById('QR-code-btn');
+  
+      function setActiveButton(button) {
+        signupBtn.classList.remove('active');
+        quoteBtn.classList.remove('active');
+  
+        signupBtn.classList.add('inactive');
+        quoteBtn.classList.add('inactive');
+  
+        button.classList.remove('inactive');
+        button.classList.add('active');
+      }
+  
+      signupBtn.addEventListener('click', function () {
+        signupForm.classList.remove('hidden');
+        quoteForm.classList.add('hidden');
+        setActiveButton(signupBtn);
+      });
+  
+      quoteBtn.addEventListener('click', function () {
+        signupForm.classList.add('hidden');
+        quoteForm.classList.remove('hidden');
+        setActiveButton(quoteBtn);
+      });
+  
+      heroBtn.addEventListener('click', function () {
+        signupForm.classList.add('hidden');
+        quoteForm.classList.add('hidden');
+        setActiveButton(heroBtn);
+      });
+    });
+  </script>
+</html>
